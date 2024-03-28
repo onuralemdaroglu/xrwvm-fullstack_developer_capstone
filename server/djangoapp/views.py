@@ -36,7 +36,7 @@ def logout_request(request):
     # Logout user in the request
     logout(request)
     # Get the user object based on session id in request
-    data = {"userName":""}
+    data = {"userName": ""}
     # Redirect user back to course list view
     return JsonResponse(data)   
 
@@ -66,13 +66,13 @@ def registration(request):
 
     if not username_exist:
         # Create user in auth_user table
-        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,password=password, email=email)
+        user = User.objects.create_user(username= username, first_name= first_name, last_name= last_name, password= password, email= email)
         # Login the user and redirect to list page
         login(request, user)
-        data = {"userName":username,"status": "Authenticated"}
+        data = {"userName": username, "status": "Authenticated"}
         return JsonResponse(data)
     else :
-        data = {"userName":username,"error": "Already Registered"}
+        data = {"userName": username, "error": "Already Registered"}
         return JsonResponse(data)
 
 # Get the list of cars
@@ -86,7 +86,7 @@ def get_cars(request):
     cars = []
     for car_model in car_models:
         cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
-    return JsonResponse({"CarModels":cars})
+    return JsonResponse({"CarModels": cars})
 
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
@@ -116,7 +116,6 @@ def get_dealer_reviews(request, dealer_id):
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
         
-
 # Create a `get_dealer_details` view to render the dealer details
 
 def get_dealer_details(request, dealer_id):
@@ -137,7 +136,7 @@ def add_review(request):
             response = post_review(data)
             return JsonResponse({"status": 200})
         except:
-            return JsonResponse({"status": 401, "message":"Error in posting review"})
+            return JsonResponse({"status": 401, "message": "Error in posting review"})
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
 
